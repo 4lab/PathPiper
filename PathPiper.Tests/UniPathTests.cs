@@ -6,11 +6,6 @@ namespace PathPiper.Tests
     [TestFixture]
     public class UniPathTests
     {
-        public void ReferenceTest()
-        {
-            // TODO
-        }
-
         [Test]
         public void HasExtension()
         {
