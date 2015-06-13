@@ -108,6 +108,37 @@ namespace PathPiper
             throw new NotImplementedException();
         }
 
+        public UniPath Append(string directoryOrFile, PathStyle pathStyle)
+        {
+            if (directoryOrFile == null)
+                return this; //TODO: Is this okay?
+
+            var seperator = GetDirectorySeperator(pathStyle);
+            if (directoryOrFile.StartsWith(seperator.ToString()))
+            {
+                if (directoryOrFile.Length > 1 && directoryOrFile[1] != seperator)
+                {
+                    // If not \\abc or //abc, remove first / or \
+                    directoryOrFile = directoryOrFile.Substring(1);
+                }
+            }
+
+            var parsed = Parse(directoryOrFile, pathStyle);
+            return Append(parsed);
+        }
+
+        public UniPath Append(UniPath path)
+        {
+            // TODO: Unit tests for this
+            if (path == null)
+                throw new ArgumentNullException("path");
+            var currentDirs = _directories;
+            var appendedDirs = path._directories;
+
+            var combined = currentDirs.Concat(appendedDirs).ToArray();
+            return new UniPath(new ReadOnlyCollection<string>(combined));
+        }
+
         /// <summary>Changes the extension of a path.</summary>
         /// <param name="newExtensionWithDot">The new extension (with or without a leading period). Specify null to remove an existing extension from path. </param>
         /// <returns></returns>
