@@ -133,5 +133,28 @@ namespace PathPiper.Tests
             normalized = path.Normalize();
             Assert.That(normalized.ToString(PathStyle.Windows), Is.EqualTo(expected));
         }
+
+        public void GetParent()
+        {
+            UniPath path = UniPath.Parse("some/path/lol.ext");
+            var expected = @"some/path";
+            var parent = path.GetParent();
+            Assert.That(parent.ToString(PathStyle.Unix), Is.EqualTo(expected));
+
+            path = UniPath.Parse("some/path/lol.ext");
+            expected = @"some\path";
+            parent = path.GetParent();
+            Assert.That(parent.ToString(PathStyle.Windows), Is.EqualTo(expected));
+
+            path = UniPath.Parse("some/lol.ext");
+            expected = @"some";
+            parent = path.GetParent();
+            Assert.That(parent.ToString(PathStyle.Unix), Is.EqualTo(expected));
+
+            path = UniPath.Parse("some/path/../lol.ext");
+            expected = @"some/path/.."; // TODO: Okay?
+            parent = path.GetParent();
+            Assert.That(parent.ToString(PathStyle.Unix), Is.EqualTo(expected));
+        }
     }
 }

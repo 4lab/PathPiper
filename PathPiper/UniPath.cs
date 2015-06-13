@@ -13,6 +13,11 @@ namespace PathPiper
             throw new NotImplementedException();
         }
 
+        public UniPath GetParent()
+        {
+            throw new NotImplementedException();
+        }
+
         public bool HasExtension
         {
             get { throw new NotImplementedException(); }
