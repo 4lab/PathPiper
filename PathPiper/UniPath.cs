@@ -17,5 +17,10 @@ namespace PathPiper
         {
             get { throw new NotImplementedException(); }
         }
+
+        public bool Extension
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

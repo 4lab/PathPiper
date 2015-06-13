@@ -30,5 +30,24 @@ namespace PathPiper.Tests
             expected = false;
             Assert.That(path.HasExtension, Is.EqualTo(expected));
         }
+
+        public void Extension()
+        {
+            UniPath path = UniPath.Parse("some_file.ext");
+            var expected = ".ext";
+            Assert.That(path.Extension, Is.EqualTo(expected));
+
+            path = UniPath.Parse("some_file.multiple.dots");
+            expected = ".dots";
+            Assert.That(path.Extension, Is.EqualTo(expected));
+
+            path = UniPath.Parse(".gitignore");
+            expected = ".gitignore";
+            Assert.That(path.Extension, Is.EqualTo(expected));
+
+            path = UniPath.Parse("some_file");
+            expected = "";
+            Assert.That(path.Extension, Is.EqualTo(expected));
+        }
     }
 }
