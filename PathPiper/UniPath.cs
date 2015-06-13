@@ -67,27 +67,11 @@ namespace PathPiper
             }
         }
 
-        // private bool? _hasExtension;
         public bool HasExtension
         {
             get
             {
                 Debug.Assert(_directories != null);
-                /*
-                if (!_hasExtension.HasValue)
-                {
-                    if (_directories.Count == 0)
-                    {
-                        _hasExtension = false;
-                    }
-                    else
-                    {
-                        var last = _directories[_directories.Count - 1];
-                        _hasExtension = Path.HasExtension(last);
-                    }
-                }
-                return _hasExtension.Value;
-                */
                 if (_directories.Count == 0)
                     return false;
                 var last = _directories[_directories.Count - 1];
