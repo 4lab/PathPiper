@@ -178,29 +178,11 @@ namespace PathPiper
         }
 
         //todo: char or string?
-        public static char EnvironmentDirectorySeperator
-        {
-            get
-            {
-                return Path.DirectorySeparatorChar;
-            }
-        }
+        public static char EnvironmentDirectorySeperator { get { return Path.DirectorySeparatorChar; } }
 
-        public static string CurrentDirectory
-        {
-            get
-            {
-                return _currentDirectory;
-            }
-        }
+        public static string CurrentDirectory { get { return _currentDirectory; } }
 
-        public static string ParentDirectory
-        {
-            get
-            {
-                return _parentDirectory;
-            }
-        }
+        public static string ParentDirectory { get { return _parentDirectory; } }
 
         public override string ToString()
         {
