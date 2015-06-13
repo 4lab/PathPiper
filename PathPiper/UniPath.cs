@@ -28,6 +28,11 @@ namespace PathPiper
             get { throw new NotImplementedException(); }
         }
 
+        public UniPath Normalize()
+        {
+            throw new NotImplementedException();
+        }
+
         public override bool Equals(object obj)
         {
             throw new NotImplementedException();

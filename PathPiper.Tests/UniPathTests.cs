@@ -94,5 +94,44 @@ namespace PathPiper.Tests
             expected = "some_file.ext"; // Intended, since trailing / will be ignored
             Assert.That(path.Name, Is.EqualTo(expected));
         }
+
+        public void Normalize()
+        {
+            UniPath path = UniPath.Parse("some/path/../lol.ext");
+            var expected = @"some/lol.ext";
+            var normalized = path.Normalize();
+            Assert.That(normalized.ToString(PathStyle.Unix), Is.EqualTo(expected));
+
+            path = UniPath.Parse("some/path/../lol.ext");
+            expected = @"some\lol.ext";
+            normalized = path.Normalize();
+            Assert.That(normalized.ToString(PathStyle.Windows), Is.EqualTo(expected));
+
+            path = UniPath.Parse("some/path/../../lol.ext");
+            expected = @"lol.ext";
+            normalized = path.Normalize();
+            Assert.That(normalized.ToString(PathStyle.Unix), Is.EqualTo(expected));
+
+            path = UniPath.Parse("some/path/../../lol.ext");
+            expected = @"lol.ext";
+            normalized = path.Normalize();
+            Assert.That(normalized.ToString(PathStyle.Windows), Is.EqualTo(expected));
+
+            // TODO: Use working directory or leave unchanged?
+            path = UniPath.Parse("../lol.ext");
+            expected = System.IO.Path.Combine(Environment.CurrentDirectory, "..", @"lol.ext");
+            normalized = path.Normalize();
+            Assert.That(normalized.ToString(PathStyle.Windows), Is.EqualTo(expected));
+
+            path = UniPath.Parse("lol.ext");
+            expected = @"lol.ext";
+            normalized = path.Normalize();
+            Assert.That(normalized.ToString(PathStyle.Windows), Is.EqualTo(expected));
+
+            path = UniPath.Parse("dir/lol.ext");
+            expected = @"dir\lol.ext";
+            normalized = path.Normalize();
+            Assert.That(normalized.ToString(PathStyle.Windows), Is.EqualTo(expected));
+        }
     }
 }
