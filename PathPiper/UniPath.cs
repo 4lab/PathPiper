@@ -54,7 +54,11 @@ namespace PathPiper
 
         public override bool Equals(object obj)
         {
-            throw new NotImplementedException();
+            // If parameter cannot be cast to UniPath, return false:
+            UniPath p = obj as UniPath;
+            if ((object)p == null)
+                return false;
+            return this == p;
         }
 
         public override int GetHashCode()
