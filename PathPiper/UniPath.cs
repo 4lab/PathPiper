@@ -12,9 +12,9 @@ namespace PathPiper
         private const string _currentDirectory = ".";
         private const string _parentDirectory = "..";
 
-        private readonly IReadOnlyCollection<string> _directories;
+        private readonly ReadOnlyCollection<string> _directories;
 
-        protected UniPath(IReadOnlyCollection<string> directories)
+        protected UniPath(ReadOnlyCollection<string> directories)
         {
             _directories = directories ?? new ReadOnlyCollection<string>(new string[0]);
         }
@@ -28,9 +28,32 @@ namespace PathPiper
             throw new NotImplementedException();
         }
 
+        // private bool? _hasExtension;
         public bool HasExtension
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                Debug.Assert(_directories != null);
+                /*
+                if (!_hasExtension.HasValue)
+                {
+                    if (_directories.Count == 0)
+                    {
+                        _hasExtension = false;
+                    }
+                    else
+                    {
+                        var last = _directories[_directories.Count - 1];
+                        _hasExtension = Path.HasExtension(last);
+                    }
+                }
+                return _hasExtension.Value;
+                */
+                if (_directories.Count == 0)
+                    return false;
+                var last = _directories[_directories.Count - 1];
+                return Path.HasExtension(last);
+            }
         }
 
         public bool Extension
