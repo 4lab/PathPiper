@@ -139,6 +139,19 @@ namespace PathPiper.Tests
             UniPath path = UniPath.Parse(@"C:\user\docs\Letter.txt");
             var expected = @"C:\user\docs\Letter.txt";
             Assert.That(path.ToString(PathStyle.Windows), Is.EqualTo(expected));
+
+            //todo: use working directory?
+            path = UniPath.Parse("../lol.ext");
+            expected = "../lol.ext";
+            Assert.That(path.ToString(PathStyle.Windows), Is.EqualTo(expected));
+
+            path = UniPath.Parse(@"C:\user\docs\somewhere\..\Letter.txt");
+            expected = @"C:\user\docs\somewhere\..\Letter.txt";
+            Assert.That(path.ToString(PathStyle.Windows), Is.EqualTo(expected));
+
+            path = UniPath.Parse(@"\\Server01\user\docs\Letter.txt");
+            expected = @"\\Server01\user\docs\Letter.txt";
+            Assert.That(path.ToString(PathStyle.Windows), Is.EqualTo(expected));
         }
     }
 }
