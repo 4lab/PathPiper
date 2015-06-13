@@ -54,28 +54,24 @@ namespace PathPiper
 
         public static PathStyle CurrentPathStyle
         {
-            get {
-                PathStyle style;
+            get
+            {
                 var platform = Environment.OSVersion.Platform;
-
-                switch (platform) {
+                switch (platform)
+                {
                     case PlatformID.Win32NT:
                     case PlatformID.Win32S:
                     case PlatformID.Win32Windows:
                     case PlatformID.WinCE:
                     case PlatformID.Xbox:
-                        style = PathStyle.Windows;
-                        break;
+                        return PathStyle.Windows;
                     case PlatformID.Unix:
                     case PlatformID.MacOSX:
-                        style = PathStyle.Unix;
-                        break;
+                        return PathStyle.Unix;
                     default:
                         //it was at this moment we knew... you fucked up.
                         throw new PlatformNotSupportedException();
                 }
-
-                return style;
             }
         }
 
