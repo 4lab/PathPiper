@@ -8,5 +8,14 @@ namespace PathPiper
 {
     public class UniPath
     {
+        public static UniPath Parse(string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasExtension
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }
