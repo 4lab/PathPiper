@@ -186,6 +186,7 @@ namespace PathPiper.Tests
             Assert.That(parent.ToString(PathStyle.Unix), Is.EqualTo(expected));
         }
 
+        [Test]
         public void ChangeExtension()
         {
             UniPath path = UniPath.Parse("some_file.ext");
