@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using NUnit.Framework;
 
 namespace PathPiper.Tests
@@ -90,39 +91,6 @@ namespace PathPiper.Tests
             Assert.That(path.Name, Is.EqualTo(expected));
         }
 
-        [Test]
-        public void NameWitoutExtension()
-        {
-            UniPath path = UniPath.Parse("some_file.ext");
-            var expected = "some_file";
-            Assert.That(path.NameWithoutExtension, Is.EqualTo(expected));
-
-            path = UniPath.Parse("some_file.multiple.dots");
-            expected = "some_file.multiple";
-            Assert.That(path.NameWithoutExtension, Is.EqualTo(expected));
-
-            path = UniPath.Parse(".gitignore");
-            expected = "";
-            Assert.That(path.NameWithoutExtension, Is.EqualTo(expected));
-
-            path = UniPath.Parse("some_file");
-            expected = "some_file";
-            Assert.That(path.NameWithoutExtension, Is.EqualTo(expected));
-
-            path = UniPath.Parse("some_file/some_file2");
-            expected = "some_file2";
-            Assert.That(path.NameWithoutExtension, Is.EqualTo(expected));
-
-            path = UniPath.Parse("some_file/");
-            expected = "some_file";
-            Assert.That(path.NameWithoutExtension, Is.EqualTo(expected));
-
-            path = UniPath.Parse("some_file.ext/");
-            expected = "some_file"; // Intended, since trailing / will be ignored
-            Assert.That(path.NameWithoutExtension, Is.EqualTo(expected));
-        }
-
-        [Test]
         public void Normalize()
         {
             UniPath path = UniPath.Parse("some/path/../lol.ext");
@@ -162,28 +130,23 @@ namespace PathPiper.Tests
             Assert.That(normalized.ToString(PathStyle.Windows), Is.EqualTo(expected));
         }
 
-        [Test]
-        public void GetParent()
-        {
-            UniPath path = UniPath.Parse("some/path/lol.ext");
-            var expected = @"some/path";
-            var parent = path.GetParent();
-            Assert.That(parent.ToString(PathStyle.Unix), Is.EqualTo(expected));
+        public void Parse() {
+            UniPath path = UniPath.Parse(@"C:\user\docs\Letter.txt");
+            var expected = @"C:\user\docs\Letter.txt";
+            Assert.That(path.ToString(PathStyle.Windows), Is.EqualTo(expected));
 
-            path = UniPath.Parse("some/path/lol.ext");
-            expected = @"some\path";
-            parent = path.GetParent();
-            Assert.That(parent.ToString(PathStyle.Windows), Is.EqualTo(expected));
+            //todo: use working directory?
+            path = UniPath.Parse("../lol.ext");
+            expected = "../lol.ext";
+            Assert.That(path.ToString(PathStyle.Windows), Is.EqualTo(expected));
 
-            path = UniPath.Parse("some/lol.ext");
-            expected = @"some";
-            parent = path.GetParent();
-            Assert.That(parent.ToString(PathStyle.Unix), Is.EqualTo(expected));
+            path = UniPath.Parse(@"C:\user\docs\somewhere\..\Letter.txt");
+            expected = @"C:\user\docs\somewhere\..\Letter.txt";
+            Assert.That(path.ToString(PathStyle.Windows), Is.EqualTo(expected));
 
-            path = UniPath.Parse("some/path/../lol.ext");
-            expected = @"some/path/.."; // TODO: Okay?
-            parent = path.GetParent();
-            Assert.That(parent.ToString(PathStyle.Unix), Is.EqualTo(expected));
+            path = UniPath.Parse(@"\\Server01\user\docs\Letter.txt");
+            expected = @"\\Server01\user\docs\Letter.txt";
+            Assert.That(path.ToString(PathStyle.Windows), Is.EqualTo(expected));
         }
 
         [Test]

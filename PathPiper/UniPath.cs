@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Dynamic;
 
 namespace PathPiper
 {
@@ -9,11 +10,6 @@ namespace PathPiper
             return Parse(path, PathStyle.Current);
         }
         public static UniPath Parse(string path, PathStyle pathStyle)
-        {
-            throw new NotImplementedException();
-        }
-
-        public UniPath GetParent()
         {
             throw new NotImplementedException();
         }
@@ -29,11 +25,6 @@ namespace PathPiper
         }
 
         public string Name
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public string NameWithoutExtension
         {
             get { throw new NotImplementedException(); }
         }
@@ -61,14 +52,17 @@ namespace PathPiper
             throw new NotImplementedException();
         }
 
-        internal static PathStyle GetCurrentPathStyle()
+        public static PathStyle CurrentPathStyle
         {
-            return PathStyle.Windows; // TODO
+            get
+            {
+                return PathStyle.Windows; // TODO
+            }
         }
 
         public override string ToString()
         {
-            return ToString(GetCurrentPathStyle());
+            return ToString(CurrentPathStyle);
         }
 
         public string ToString(PathStyle style)
