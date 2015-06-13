@@ -149,6 +149,14 @@ namespace PathPiper.Tests
             path = UniPath.Parse(@"\\Server01\user\docs\Letter.txt");
             expected = @"\\Server01\user\docs\Letter.txt";
             Assert.That(path.ToString(PathStyle.Windows), Is.EqualTo(expected));
+
+            path = UniPath.Parse(@"/home/4lab/.config/fish/config.fish");
+            expected = @"/home/4lab/.config/fish/config.fish";
+            Assert.That(path.ToString(PathStyle.Unix), Is.EqualTo(expected));
+
+            path = UniPath.Parse(@"/home/4lab/.config/fish/config.fish");
+            expected = @"\home\4lab\.config\fish\config.fish";
+            Assert.That(path.ToString(PathStyle.Windows), Is.EqualTo(expected));
         }
 
         [Test]
