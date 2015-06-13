@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 namespace PathPiper
 {
-    public class UniPath
-    {
+    public class UniPath {
+        private const string _currentDirectory = ".";
+        private const string _parentDirectory = "..";
+
         private readonly IReadOnlyCollection<string> _directories;
 
         protected UniPath(IReadOnlyCollection<string> directories)
@@ -17,7 +20,7 @@ namespace PathPiper
 
         public static UniPath Parse(string path)
         {
-            return Parse(path, CurrentPathStyle);
+            return Parse(path, EnvironmentPathStyle);
         }
         public static UniPath Parse(string path, PathStyle pathStyle)
         {
@@ -62,7 +65,7 @@ namespace PathPiper
             throw new NotImplementedException();
         }
 
-        public static PathStyle CurrentPathStyle
+        public static PathStyle EnvironmentPathStyle
         {
             get
             {
@@ -85,9 +88,33 @@ namespace PathPiper
             }
         }
 
+        //todo: char or string?
+        public static char EnvironmentDirectorySeperator
+        {
+            get {
+                return Path.DirectorySeparatorChar;
+            }
+        }
+
+        public static string CurrentDirectory
+        {
+            get
+            {
+                return _currentDirectory;
+            }
+        }
+
+        public static string ParentDirectory
+        {
+            get
+            {
+                return _parentDirectory;
+            }
+        }
+
         public override string ToString()
         {
-            return ToString(CurrentPathStyle);
+            return ToString(EnvironmentPathStyle);
         }
 
         public string ToString(PathStyle style)
