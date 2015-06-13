@@ -7,7 +7,8 @@ using System.Linq;
 
 namespace PathPiper
 {
-    public class UniPath {
+    public class UniPath
+    {
         private const string _currentDirectory = ".";
         private const string _parentDirectory = "..";
 
@@ -103,7 +104,8 @@ namespace PathPiper
         //todo: char or string?
         public static char EnvironmentDirectorySeperator
         {
-            get {
+            get
+            {
                 return Path.DirectorySeparatorChar;
             }
         }
