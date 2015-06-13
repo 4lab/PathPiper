@@ -162,7 +162,7 @@ namespace PathPiper
         }
 
         //todo: char or string?
-        public static char EnvironmentDirectorySeperator { get { return Path.DirectorySeparatorChar; } }
+        public static char EnvironmentDirectorySeperator { get { return GetDirectorySeperator(EnvironmentPathStyle); } }
 
         public static string CurrentDirectory { get { return _currentDirectory; } }
 
