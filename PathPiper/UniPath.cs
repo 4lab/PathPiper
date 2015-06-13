@@ -24,20 +24,28 @@ namespace PathPiper
             get { throw new NotImplementedException(); }
         }
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object obj)
+        {
             throw new NotImplementedException();
         }
 
-        public override int GetHashCode() {
+        public override int GetHashCode()
+        {
             throw new NotImplementedException();
         }
 
-        public override string ToString() {
-            var currentPathStyle = PathStyle.Windows; //todo:
-            return ToString(currentPathStyle);
+        internal static PathStyle GetCurrentPathStyle()
+        {
+            return PathStyle.Windows; // TODO
         }
 
-        public string ToString(PathStyle style) {
+        public override string ToString()
+        {
+            return ToString(GetCurrentPathStyle());
+        }
+
+        public string ToString(PathStyle style)
+        {
             throw new NotImplementedException();
         }
     }
