@@ -6,6 +6,10 @@ namespace PathPiper
     {
         public static UniPath Parse(string path)
         {
+            return Parse(path, PathStyle.Current);
+        }
+        public static UniPath Parse(string path, PathStyle pathStyle)
+        {
             throw new NotImplementedException();
         }
 
