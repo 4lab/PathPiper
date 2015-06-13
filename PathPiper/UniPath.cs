@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 
 namespace PathPiper
 {
@@ -91,6 +93,38 @@ namespace PathPiper
         public string ToString(PathStyle style)
         {
             throw new NotImplementedException();
+        }
+
+        public static bool operator ==(UniPath a, UniPath b)
+        {
+            if (object.ReferenceEquals(a, b))
+                return true;
+            if (((object)a == null) || ((object)b == null))
+                return false;
+
+            Debug.Assert(a._directories != null);
+            Debug.Assert(b._directories != null);
+
+            var aNorm = a.Normalize();
+            var bNorm = b.Normalize();
+
+            if (aNorm._directories.Count != bNorm._directories.Count)
+                return false;
+
+            var aArr = a._directories.ToArray();
+            var bArr = b._directories.ToArray();
+
+            for (int i = 0; i < aArr.Length; ++i)
+            {
+                if (aArr[i] != bArr[i])
+                    return false;
+            }
+            return true;
+        }
+
+        public static bool operator !=(UniPath a, UniPath b)
+        {
+            return !(a == b);
         }
     }
 }
