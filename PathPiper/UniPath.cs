@@ -1,10 +1,18 @@
 ﻿using System;
-using System.Dynamic;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace PathPiper
 {
     public class UniPath
     {
+        private readonly IReadOnlyCollection<string> _directories;
+
+        protected UniPath(IReadOnlyCollection<string> directories)
+        {
+            _directories = directories ?? new ReadOnlyCollection<string>(new string[0]);
+        }
+
         public static UniPath Parse(string path)
         {
             return Parse(path, CurrentPathStyle);
