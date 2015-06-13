@@ -7,7 +7,7 @@ namespace PathPiper
     {
         public static UniPath Parse(string path)
         {
-            return Parse(path, PathStyle.Current);
+            return Parse(path, CurrentPathStyle);
         }
         public static UniPath Parse(string path, PathStyle pathStyle)
         {
