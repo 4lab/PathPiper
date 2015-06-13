@@ -31,6 +31,7 @@ namespace PathPiper.Tests
             Assert.That(path.HasExtension, Is.EqualTo(expected));
         }
 
+        [Test]
         public void Extension()
         {
             UniPath path = UniPath.Parse("some_file.ext");
@@ -47,6 +48,19 @@ namespace PathPiper.Tests
 
             path = UniPath.Parse("some_file");
             expected = "";
+            Assert.That(path.Extension, Is.EqualTo(expected));
+
+
+            path = UniPath.Parse("some_file/some_file2");
+            expected = "";
+            Assert.That(path.Extension, Is.EqualTo(expected));
+
+            path = UniPath.Parse("some_file/");
+            expected = "";
+            Assert.That(path.Extension, Is.EqualTo(expected));
+
+            path = UniPath.Parse("some_file.ext/");
+            expected = ".ext"; // Intended, since trailing / will be ignored
             Assert.That(path.Extension, Is.EqualTo(expected));
         }
     }
