@@ -50,7 +50,6 @@ namespace PathPiper.Tests
             expected = "";
             Assert.That(path.Extension, Is.EqualTo(expected));
 
-
             path = UniPath.Parse("some_file/some_file2");
             expected = "";
             Assert.That(path.Extension, Is.EqualTo(expected));
@@ -62,6 +61,38 @@ namespace PathPiper.Tests
             path = UniPath.Parse("some_file.ext/");
             expected = ".ext"; // Intended, since trailing / will be ignored
             Assert.That(path.Extension, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void Name()
+        {
+            UniPath path = UniPath.Parse("some_file.ext");
+            var expected = "some_file.ext";
+            Assert.That(path.Name, Is.EqualTo(expected));
+
+            path = UniPath.Parse("some_file.multiple.dots");
+            expected = "some_file.multiple.dots";
+            Assert.That(path.Name, Is.EqualTo(expected));
+
+            path = UniPath.Parse(".gitignore");
+            expected = ".gitignore";
+            Assert.That(path.Name, Is.EqualTo(expected));
+
+            path = UniPath.Parse("some_file");
+            expected = "some_file";
+            Assert.That(path.Name, Is.EqualTo(expected));
+
+            path = UniPath.Parse("some_file/some_file2");
+            expected = "some_file2";
+            Assert.That(path.Name, Is.EqualTo(expected));
+
+            path = UniPath.Parse("some_file/");
+            expected = "some_file";
+            Assert.That(path.Name, Is.EqualTo(expected));
+
+            path = UniPath.Parse("some_file.ext/");
+            expected = "some_file.ext"; // Intended, since trailing / will be ignored
+            Assert.That(path.Name, Is.EqualTo(expected));
         }
     }
 }
