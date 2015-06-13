@@ -1,0 +1,8 @@
+language: csharp
+solution: ./PathPiper.sln
+install:
+  - nuget restore ./PathPiper.sln
+  - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
+script:
+  - xbuild /p:Configuration=Release /p:PostBuildEventUseInBuild=false /p:PreBuildEvent="" /p:PostBuildEvent="" /p:TargetFrameworkProfile="" ./PathPiper.sln
+  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe ./PathPiper.Tests/bin/Release/PathPiper.Tests.dll
