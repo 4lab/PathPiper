@@ -27,6 +27,10 @@ namespace PathPiper.Tests
             expected = true;
             Assert.That(path.HasExtension, Is.EqualTo(expected));
 
+            path = UniPath.Parse(".gitignore");
+            expected = true;
+            Assert.That(path.HasExtension, Is.EqualTo(expected));
+
             path = UniPath.Parse("some_file");
             expected = false;
             Assert.That(path.HasExtension, Is.EqualTo(expected));
