@@ -59,7 +59,7 @@ namespace PathPiper
 
         public override int GetHashCode()
         {
-            throw new NotImplementedException();
+            return _directories.GetHashCode();
         }
 
         public static PathStyle CurrentPathStyle
