@@ -69,7 +69,14 @@ namespace PathPiper
 
         public string Name
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                Debug.Assert(_directories != null);
+                if (_directories.Count == 0)
+                    return null;
+                var last = _directories[_directories.Count - 1];
+                return Path.GetDirectoryName(last);
+            }
         }
 
         public UniPath Normalize()
