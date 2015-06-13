@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using NUnit.Framework;
 
 namespace PathPiper.Tests
@@ -132,6 +133,12 @@ namespace PathPiper.Tests
             expected = @"dir\lol.ext";
             normalized = path.Normalize();
             Assert.That(normalized.ToString(PathStyle.Windows), Is.EqualTo(expected));
+        }
+
+        public void Parse() {
+            UniPath path = UniPath.Parse(@"C:\user\docs\Letter.txt");
+            var expected = @"C:\user\docs\Letter.txt";
+            Assert.That(path.ToString(PathStyle.Windows), Is.EqualTo(expected));
         }
     }
 }
