@@ -97,6 +97,8 @@ namespace PathPiper
 
         public static bool operator ==(UniPath a, UniPath b)
         {
+            // TODO: Casing? Windows doesn't care about the casing.
+
             if (object.ReferenceEquals(a, b))
                 return true;
             if (((object)a == null) || ((object)b == null))
