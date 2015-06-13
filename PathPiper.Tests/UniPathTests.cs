@@ -91,6 +91,7 @@ namespace PathPiper.Tests
             Assert.That(path.Name, Is.EqualTo(expected));
         }
 
+        [Test]
         public void Normalize()
         {
             UniPath path = UniPath.Parse("some/path/../lol.ext");
@@ -130,7 +131,9 @@ namespace PathPiper.Tests
             Assert.That(normalized.ToString(PathStyle.Windows), Is.EqualTo(expected));
         }
 
-        public void Parse() {
+        [Test]
+        public void Parse()
+        {
             UniPath path = UniPath.Parse(@"C:\user\docs\Letter.txt");
             var expected = @"C:\user\docs\Letter.txt";
             Assert.That(path.ToString(PathStyle.Windows), Is.EqualTo(expected));
