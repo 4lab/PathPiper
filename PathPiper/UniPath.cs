@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PathPiper
 {
@@ -21,6 +17,23 @@ namespace PathPiper
         public bool Extension
         {
             get { throw new NotImplementedException(); }
+        }
+
+        public override bool Equals(object obj) {
+            throw new NotImplementedException();
+        }
+
+        public override int GetHashCode() {
+            throw new NotImplementedException();
+        }
+
+        public override string ToString() {
+            var currentPathStyle = PathStyle.Windows; //todo:
+            return ToString(currentPathStyle);
+        }
+
+        public string ToString(PathStyle style) {
+            throw new NotImplementedException();
         }
     }
 }
