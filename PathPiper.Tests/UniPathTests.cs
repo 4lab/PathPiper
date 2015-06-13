@@ -185,5 +185,43 @@ namespace PathPiper.Tests
             parent = path.GetParent();
             Assert.That(parent.ToString(PathStyle.Unix), Is.EqualTo(expected));
         }
+
+        public void ChangeExtension()
+        {
+            UniPath path = UniPath.Parse("some_file.ext");
+            var changed = path.ChangeExtension(".lol");
+            var expected = "some_file.lol";
+            Assert.That(changed.Name, Is.EqualTo(expected));
+
+            path = UniPath.Parse("some_file.multiple.dots");
+            changed = path.ChangeExtension(".lol");
+            expected = "some_file.multiple.dots.lol";
+            Assert.That(changed.Name, Is.EqualTo(expected));
+
+            path = UniPath.Parse(".gitignore");
+            changed = path.ChangeExtension(".lol");
+            expected = ".lol";
+            Assert.That(changed.Name, Is.EqualTo(expected));
+
+            path = UniPath.Parse("some_file");
+            changed = path.ChangeExtension(".lol");
+            expected = "some_file.lol";
+            Assert.That(changed.Name, Is.EqualTo(expected));
+
+            path = UniPath.Parse("some_file/some_file2");
+            changed = path.ChangeExtension(".lol");
+            expected = "some_file/some_file2.lol";
+            Assert.That(changed.Name, Is.EqualTo(expected));
+
+            path = UniPath.Parse("some_file/");
+            changed = path.ChangeExtension(".lol");
+            expected = "some_file.lol"; // Intended, since trailing / will be ignored
+            Assert.That(changed.Name, Is.EqualTo(expected));
+
+            path = UniPath.Parse("some_file.ext/");
+            changed = path.ChangeExtension(".lol");
+            expected = "some_file.lol"; // Intended, since trailing / will be ignored
+            Assert.That(changed.Name, Is.EqualTo(expected));
+        }
     }
 }

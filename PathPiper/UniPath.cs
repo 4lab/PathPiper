@@ -43,6 +43,14 @@ namespace PathPiper
             throw new NotImplementedException();
         }
 
+        /// <summary>Changes the extension of a path.</summary>
+        /// <param name="newExtensionWithDot">The new extension (with or without a leading period). Specify null to remove an existing extension from path. </param>
+        /// <returns></returns>
+        public UniPath ChangeExtension(string newExtensionWithDot)
+        {
+            throw new NotImplementedException();
+        }
+
         public override bool Equals(object obj)
         {
             throw new NotImplementedException();
