@@ -25,21 +25,10 @@ namespace PathPiper
         }
         public static UniPath Parse(string path, PathStyle pathStyle)
         {
-            char directorySeperator;
             char[] invalidFileNameChars = { '\"', '<', '>', '|', '\0', (Char)1, (Char)2, (Char)3, (Char)4, (Char)5, (Char)6, (Char)7, (Char)8, (Char)9, (Char)10, (Char)11, (Char)12, (Char)13, (Char)14, (Char)15, (Char)16, (Char)17, (Char)18, (Char)19, (Char)20, (Char)21, (Char)22, (Char)23, (Char)24, (Char)25, (Char)26, (Char)27, (Char)28, (Char)29, (Char)30, (Char)31, ':', '*', '?', '\\', '/' };
 
-            switch (pathStyle)
-            {
-                case PathStyle.Windows:
-                    directorySeperator = '\\';
-                    break;
-                case PathStyle.Unix:
-                    directorySeperator = '/';
-                    break;
-                default:
-                    throw new PlatformNotSupportedException();
-            }
 
+            char directorySeperator = GetDirectorySeperator(pathStyle);
             var parts = path.Split(new[] { directorySeperator });
             var items = new List<string>();
 
@@ -62,12 +51,20 @@ namespace PathPiper
                 items.Add(part);
             }
 
-            return new UniPath(new ReadOnlyCollection<string>(new List<string>()));
+            return new UniPath(new ReadOnlyCollection<string>(items));
         }
 
         private static char GetDirectorySeperator(PathStyle pathStyle)
         {
-
+            switch (pathStyle)
+            {
+                case PathStyle.Windows:
+                    return '\\';
+                case PathStyle.Unix:
+                    return '/';
+                default:
+                    throw new PlatformNotSupportedException();
+            }
         }
 
         // private bool? _hasExtension;
