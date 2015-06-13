@@ -33,6 +33,11 @@ namespace PathPiper
             get { throw new NotImplementedException(); }
         }
 
+        public string NameWithoutExtension
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public UniPath Normalize()
         {
             throw new NotImplementedException();

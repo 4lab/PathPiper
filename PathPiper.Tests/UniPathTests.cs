@@ -96,6 +96,38 @@ namespace PathPiper.Tests
         }
 
         [Test]
+        public void NameWitoutExtension()
+        {
+            UniPath path = UniPath.Parse("some_file.ext");
+            var expected = "some_file";
+            Assert.That(path.NameWithoutExtension, Is.EqualTo(expected));
+
+            path = UniPath.Parse("some_file.multiple.dots");
+            expected = "some_file.multiple";
+            Assert.That(path.NameWithoutExtension, Is.EqualTo(expected));
+
+            path = UniPath.Parse(".gitignore");
+            expected = "";
+            Assert.That(path.NameWithoutExtension, Is.EqualTo(expected));
+
+            path = UniPath.Parse("some_file");
+            expected = "some_file";
+            Assert.That(path.NameWithoutExtension, Is.EqualTo(expected));
+
+            path = UniPath.Parse("some_file/some_file2");
+            expected = "some_file2";
+            Assert.That(path.NameWithoutExtension, Is.EqualTo(expected));
+
+            path = UniPath.Parse("some_file/");
+            expected = "some_file";
+            Assert.That(path.NameWithoutExtension, Is.EqualTo(expected));
+
+            path = UniPath.Parse("some_file.ext/");
+            expected = "some_file"; // Intended, since trailing / will be ignored
+            Assert.That(path.NameWithoutExtension, Is.EqualTo(expected));
+        }
+
+        [Test]
         public void Normalize()
         {
             UniPath path = UniPath.Parse("some/path/../lol.ext");
