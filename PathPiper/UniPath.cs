@@ -46,7 +46,8 @@ namespace PathPiper
                 //check invalid chars
                 if (!isValidDriveSpecifier)
                 {
-                    for (int j = 0; j < part.Length; j++) {
+                    for (int j = 0; j < part.Length; j++)
+                    {
                         var ch = part[j];
                         if (invalidFileNameChars.Contains(ch))
                             throw new FormatException(String.Format("Found illegal char '{0}'", ch));
