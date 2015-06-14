@@ -127,6 +127,11 @@ namespace PathPiper.Tests
             expected = @"dir\lol.ext";
             normalized = path.Normalize();
             Assert.That(normalized.ToString(PathStyle.Windows), Is.EqualTo(expected));
+
+            path = UniPath.Parse("some/path/../../path/../../../lol.ext", PathStyle.Unix);
+            expected = @"../../lol.ext";
+            normalized = path.Normalize();
+            Assert.That(normalized.ToString(PathStyle.Unix), Is.EqualTo(expected));
         }
 
         [Test]
