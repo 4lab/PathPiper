@@ -45,15 +45,15 @@ namespace PathPiper.Tests
             expected = "";
             Assert.That(path.Extension, Is.EqualTo(expected));
 
-            path = UniPath.Parse("some_file/some_file2");
+            path = UniPath.Parse("some_file/some_file2", PathStyle.Unix);
             expected = "";
             Assert.That(path.Extension, Is.EqualTo(expected));
 
-            path = UniPath.Parse("some_file/");
+            path = UniPath.Parse("some_file/", PathStyle.Unix);
             expected = "";
             Assert.That(path.Extension, Is.EqualTo(expected));
 
-            path = UniPath.Parse("some_file.ext/");
+            path = UniPath.Parse("some_file.ext/", PathStyle.Unix);
             expected = ".ext"; // Intended, since trailing / will be ignored
             Assert.That(path.Extension, Is.EqualTo(expected));
         }
