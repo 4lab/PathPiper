@@ -124,39 +124,46 @@ namespace PathPiper
                 return new UniPath(new ReadOnlyCollection<string>(dirs));
 
             var dirStack = new Stack<string>();
-            int outOfScopeUppers = 0;
+            int outOfScopeUppers = 0; // Used to count references to non-given parents like in "../../lolxd.txt" (would be 2)
+
             for (int i = 0; i < dirs.Length; ++i)
             {
                 var currentDir = dirs[i];
                 switch (currentDir)
                 {
-                    case _currentDirectory:
-                        continue; // "."
-                    case _parentDirectory:
-                        // ".."
+                    case _currentDirectory: // "."
+                        continue; // Ignore "." folders/files
+
+                    case _parentDirectory: // ".."
+
+                        // If there are any directories on the stack, pop them
                         if (dirStack.Count > 0)
                         {
                             dirStack.Pop();
                         }
                         else
                         {
+                            // If not, increment out-of-scope-parents
                             ++outOfScopeUppers;
                         }
                         break;
                     default:
+                        // Push the dir name onto the stack
                         dirStack.Push(currentDir);
                         break;
                 }
             }
 
-            var stackArray = dirStack.ToArray();
-            Array.Reverse(stackArray);
+            var stackArray = dirStack.ToArray(); // Convert it for random access
+            Array.Reverse(stackArray); // reverse, because ToArray returns it in the wrong order for us
 
             var res = new string[outOfScopeUppers + dirStack.Count];
 
+            // If there were any parents out of scope, prefix a few ".." dirs
             for (int i = 0; i < outOfScopeUppers; ++i)
                 res[i] = _parentDirectory;
 
+            // Fill the rest with the actual directories
             for (int i = outOfScopeUppers; i < res.Length; ++i)
                 res[i] = stackArray[i - outOfScopeUppers];
 
