@@ -40,12 +40,17 @@ namespace PathPiper
                 var part = parts[i];
                 Trace.WriteLine("Parse() part: " + part);
 
+                //check windows drive letter
+                var isValidDriveSpecifier = (i == 0 && pathStyle == PathStyle.Windows && part.Length == 2 && part[1] == ':' && Char.IsLetter(part[0]));
+
                 //check invalid chars
-                for (int j = 0; j < part.Length; j++)
+                if (!isValidDriveSpecifier)
                 {
-                    var ch = part[j];
-                    if (invalidFileNameChars.Contains(ch))
-                        throw new FormatException(String.Format("Found illegal char '{0}'", ch));
+                    for (int j = 0; j < part.Length; j++) {
+                        var ch = part[j];
+                        if (invalidFileNameChars.Contains(ch))
+                            throw new FormatException(String.Format("Found illegal char '{0}'", ch));
+                    }
                 }
 
                 //todo: check if this thing is empty
