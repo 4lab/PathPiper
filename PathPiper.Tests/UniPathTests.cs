@@ -77,15 +77,15 @@ namespace PathPiper.Tests
             expected = "some_file";
             Assert.That(path.Name, Is.EqualTo(expected));
 
-            path = UniPath.Parse("some_file/some_file2");
+            path = UniPath.Parse("some_file/some_file2", PathStyle.Unix);
             expected = "some_file2";
             Assert.That(path.Name, Is.EqualTo(expected));
 
-            path = UniPath.Parse("some_file/");
+            path = UniPath.Parse("some_file/", PathStyle.Unix);
             expected = "some_file";
             Assert.That(path.Name, Is.EqualTo(expected));
 
-            path = UniPath.Parse("some_file.ext/");
+            path = UniPath.Parse("some_file.ext/", PathStyle.Unix);
             expected = "some_file.ext"; // Intended, since trailing / will be ignored
             Assert.That(path.Name, Is.EqualTo(expected));
         }
