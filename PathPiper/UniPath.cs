@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace PathPiper
 {
@@ -246,7 +245,7 @@ namespace PathPiper
         public override bool Equals(object other)
         {
             // If parameter cannot be cast to UniPath, return false:
-            UniPath p = other as UniPath;
+            var p = other as UniPath;
             if ((object)p == null)
                 return false;
             return this == p;
@@ -309,8 +308,7 @@ namespace PathPiper
         public static bool operator ==(UniPath a, UniPath b)
         {
             // TODO: Casing? Windows doesn't care about the casing.
-
-            if (object.ReferenceEquals(a, b))
+            if (ReferenceEquals(a, b))
                 return true;
             if (((object)a == null) || ((object)b == null))
                 return false;
