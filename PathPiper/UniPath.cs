@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace PathPiper
 {
@@ -30,21 +31,38 @@ namespace PathPiper
 
             char[] invalidFileNameChars = { '\"', '<', '>', '|', '\0', (Char)1, (Char)2, (Char)3, (Char)4, (Char)5, (Char)6, (Char)7, (Char)8, (Char)9, (Char)10, (Char)11, (Char)12, (Char)13, (Char)14, (Char)15, (Char)16, (Char)17, (Char)18, (Char)19, (Char)20, (Char)21, (Char)22, (Char)23, (Char)24, (Char)25, (Char)26, (Char)27, (Char)28, (Char)29, (Char)30, (Char)31, ':', '*', '?', '\\', '/' };
 
+            Trace.WriteLine(String.Format("===Parse(\"{0}\")===", path));
 
-            char directorySeperator = GetDirectorySeperator(pathStyle);
+            var directorySeperator = GetDirectorySeperator(pathStyle);
             var parts = path.Split(new[] { directorySeperator });
             var items = new List<string>();
 
+            var isNetworkPath = false;
             for (var i = 0; i < parts.Length; i++)
             {
                 var part = parts[i];
-                Trace.WriteLine("Parse() part: " + part);
+                Trace.WriteLine(String.Format("parts[{0}] = \"{1}\"", i, part));
+
+                //skip to 3 when having a network path (_after_ server name)
+                if (isNetworkPath && i < 3)
+                    continue;
 
                 //check windows drive letter
                 var isValidDriveSpecifier = (i == 0 && pathStyle == PathStyle.Windows && part.Length == 2 && part[1] == ':' && Char.IsLetter(part[0]));
 
+                //if not, maybe its a network path. only check this at start, if style is set to windows and...
+                if (!isValidDriveSpecifier && i == 0 && pathStyle == PathStyle.Windows
+                    && parts[0].Length == 0 && parts[1].Length == 0) //...if we have two empty items at start (two slashes splitted)
+                {
+                    isNetworkPath = true;
+                    Trace.WriteLine("This is a valid network path");
+
+                    //set current item to server identifier
+                    part = "\\\\" + parts[2];
+                }
+
                 //check invalid chars
-                if (!isValidDriveSpecifier)
+                if (!isValidDriveSpecifier && !isNetworkPath)
                 {
                     for (int j = 0; j < part.Length; j++)
                     {
@@ -60,8 +78,11 @@ namespace PathPiper
                     continue;
 
                 //if everything is fine, add
+                Trace.WriteLine(String.Format("  ->items.Add(\"{0}\")", part));
                 items.Add(part);
             }
+
+            Trace.WriteLine("===parsing ended===");
 
             return new UniPath(new ReadOnlyCollection<string>(items));
         }
