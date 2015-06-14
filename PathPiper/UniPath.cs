@@ -55,7 +55,8 @@ namespace PathPiper
                 }
 
                 //check if this thing is empty
-                if (part.Length == 0)
+                //empty item is ok if this is the first part, means the path stars with a slash.
+                if (part.Length == 0 && i != 0)
                     continue;
 
                 //if everything is fine, add
