@@ -117,7 +117,50 @@ namespace PathPiper
 
         public UniPath Normalize()
         {
-            throw new NotImplementedException();
+            // This may need optimization
+            Debug.Assert(_directories != null);
+            var dirs = _directories.ToArray();
+            if (dirs.Length == 1)
+                return new UniPath(new ReadOnlyCollection<string>(dirs));
+
+            var dirStack = new Stack<string>();
+            int outOfScopeUppers = 0;
+            for (int i = 0; i < dirs.Length; ++i)
+            {
+                var currentDir = dirs[i];
+                switch (currentDir)
+                {
+                    case _currentDirectory:
+                        continue; // "."
+                    case _parentDirectory:
+                        // ".."
+                        if (dirStack.Count > 0)
+                        {
+                            dirStack.Pop();
+                        }
+                        else
+                        {
+                            ++outOfScopeUppers;
+                        }
+                        break;
+                    default:
+                        dirStack.Push(currentDir);
+                        break;
+                }
+            }
+
+            var stackArray = dirStack.ToArray();
+            Array.Reverse(stackArray);
+
+            var res = new string[outOfScopeUppers + dirStack.Count];
+
+            for (int i = 0; i < outOfScopeUppers; ++i)
+                res[i] = _parentDirectory;
+
+            for (int i = outOfScopeUppers; i < res.Length; ++i)
+                res[i] = stackArray[i - outOfScopeUppers];
+
+            return new UniPath(new ReadOnlyCollection<string>(res));
         }
 
         public UniPath Append(string directoryOrFile)
