@@ -54,7 +54,9 @@ namespace PathPiper
                     }
                 }
 
-                //todo: check if this thing is empty
+                //check if this thing is empty
+                if (part.Length == 0)
+                    continue;
 
                 //if everything is fine, add
                 items.Add(part);
