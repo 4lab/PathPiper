@@ -108,7 +108,7 @@ namespace PathPiper
                 if (_directories.Count == 0)
                     return null;
                 var last = _directories[_directories.Count - 1];
-                return Path.GetDirectoryName(last);
+                return Path.GetFileName(last);
             }
         }
 
