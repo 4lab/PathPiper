@@ -56,13 +56,15 @@ namespace PathPiper
                     isNetworkPath = true;
                     Trace.WriteLine("This is a valid network path");
 
-                    //set current item to server identifier
+                    //set current item to server identifier ("\\bla")
+                    //todo: check server name
                     part = "\\\\" + parts[2];
                 }
 
                 //check invalid chars
-                if (!isValidDriveSpecifier && !isNetworkPath)
+                if (i != 0 && (!isValidDriveSpecifier || !isNetworkPath)) //todo: is this logic ok?
                 {
+                    Trace.WriteLine("checking " + part);
                     foreach (var ch in part)
                     {
                         if (_invalidFileNameChars.Contains(ch))
