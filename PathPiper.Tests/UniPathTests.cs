@@ -160,6 +160,14 @@ namespace PathPiper.Tests
         }
 
         [Test]
+        public void ParseExceptions()
+        {
+            Assert.That(() => UniPath.Parse(null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => UniPath.Parse(null, PathStyle.Unix), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => UniPath.Parse(null, PathStyle.Windows), Throws.InstanceOf<ArgumentNullException>());
+        }
+
+        [Test]
         public void ChangeExtension()
         {
             UniPath path = UniPath.Parse("some_file.ext");
@@ -212,6 +220,14 @@ namespace PathPiper.Tests
             actual = UniPath.Parse(@"C:\user\docs", PathStyle.Windows).Append(@"/subdir/Letter.txt", PathStyle.Unix);
             expected = UniPath.Parse(@"C:\user\docs\subdir\Letter.txt", PathStyle.Windows);
             Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void AppendExceptions()
+        {
+            //var expected = UniPath.Parse(@"C:\user\docs\Letter.txt");
+            //Assert.That(() => expected.Append((string)null), Throws.InstanceOf<ArgumentNullException>());
+            //Assert.That(() => expected.Append((UniPath)null), Throws.InstanceOf<ArgumentNullException>());
         }
     }
 }
