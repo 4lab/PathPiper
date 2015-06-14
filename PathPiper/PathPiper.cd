@@ -3,15 +3,15 @@
   <Class Name="PathPiper.UniPath">
     <Position X="1" Y="0.5" Width="2.5" />
     <Members>
-      <Field Name="_currentDirectory" Hidden="true" />
+      <Field Name="_currentDirectoryAbbreviation" Hidden="true" />
       <Field Name="_directories" Hidden="true" />
       <Field Name="_invalidFileNameChars" Hidden="true" />
-      <Field Name="_parentDirectory" Hidden="true" />
+      <Field Name="_parentDirectoryAbbreviation" Hidden="true" />
       <Method Name="GetDirectorySeperator" Hidden="true" />
       <Method Name="UniPath" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AQAgAQAAAAIAAAIEkAAgACQAAAIAAYFAAEAAAAAAAiA=</HashCode>
+      <HashCode>AQAgAAAAAAAAAAIEkBAgAKQAAAAAQYFAAEAQAAAAAiA=</HashCode>
       <FileName>UniPath.cs</FileName>
     </TypeIdentifier>
   </Class>
