@@ -154,7 +154,13 @@ namespace PathPiper
         /// <returns></returns>
         public UniPath ChangeExtension(string newExtensionWithDot)
         {
-            throw new NotImplementedException();
+            Debug.Assert(_directories != null);
+            var dirs = _directories.ToArray();
+            if (dirs.Length == 0)
+                return new UniPath(new ReadOnlyCollection<string>(new[] { newExtensionWithDot }));
+            var last = dirs[dirs.Length - 1];
+            dirs[dirs.Length - 1] = Path.ChangeExtension(last, newExtensionWithDot);
+            return new UniPath(new ReadOnlyCollection<string>(dirs));
         }
 
         public override bool Equals(object other)
