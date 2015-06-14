@@ -99,6 +99,14 @@ namespace PathPiper
             }
         }
 
+        public static UniPath WorkingDirectoryPath
+        {
+            get
+            {
+                return Parse(Environment.CurrentDirectory);
+            }
+        }
+
         public bool HasExtension
         {
             get
