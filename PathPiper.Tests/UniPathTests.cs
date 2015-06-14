@@ -228,6 +228,11 @@ namespace PathPiper.Tests
             expected = UniPath.Parse(@"C:\user\docs\subdir\Letter.txt", PathStyle.Windows);
             //Assert.That(actual, Is.EqualTo(expected));
             Assert.That(actual == expected);
+
+            var append = UniPath.Parse("picture.jpg");
+            actual = UniPath.Parse(@"C:\user\pictures", PathStyle.Windows).Append(append);
+            expected = UniPath.Parse(@"C:\user\pictures\picture.jpg", PathStyle.Windows);
+            Assert.That(actual == expected);
         }
 
         [Test]
