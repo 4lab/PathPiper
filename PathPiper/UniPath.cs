@@ -108,6 +108,11 @@ namespace PathPiper
             throw new NotImplementedException();
         }
 
+        public UniPath Append(string directoryOrFile)
+        {
+            return Append(directoryOrFile, EnvironmentPathStyle);
+        }
+
         public UniPath Append(string directoryOrFile, PathStyle pathStyle)
         {
             if (directoryOrFile == null)

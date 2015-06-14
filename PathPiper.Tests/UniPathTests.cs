@@ -197,5 +197,21 @@ namespace PathPiper.Tests
             expected = "some_file.lol"; // Intended, since trailing / will be ignored
             Assert.That(changed.Name, Is.EqualTo(expected));
         }
+
+        [Test]
+        public void Append()
+        {
+            var actual = UniPath.Parse(@"C:\user\docs", PathStyle.Windows).Append(@"\Letter.txt", PathStyle.Windows);
+            var expected = UniPath.Parse(@"C:\user\docs\Letter.txt");
+            Assert.That(actual, Is.EqualTo(expected));
+
+            actual = UniPath.Parse(@"C:\user\docs", PathStyle.Windows).Append(@"Letter.txt");
+            expected = UniPath.Parse(@"C:\user\docs\Letter.txt", PathStyle.Windows);
+            Assert.That(actual, Is.EqualTo(expected));
+
+            actual = UniPath.Parse(@"C:\user\docs", PathStyle.Windows).Append(@"/subdir/Letter.txt", PathStyle.Unix);
+            expected = UniPath.Parse(@"C:\user\docs\subdir\Letter.txt", PathStyle.Windows);
+            Assert.That(actual, Is.EqualTo(expected));
+        }
     }
 }
