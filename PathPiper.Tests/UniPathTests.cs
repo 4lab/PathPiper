@@ -171,6 +171,8 @@ namespace PathPiper.Tests
             Assert.That(() => UniPath.Parse(null), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => UniPath.Parse(null, PathStyle.Unix), Throws.InstanceOf<ArgumentNullException>());
             Assert.That(() => UniPath.Parse(null, PathStyle.Windows), Throws.InstanceOf<ArgumentNullException>());
+
+            Assert.That(() => UniPath.Parse(@"C:\test\inv|alid\", PathStyle.Windows), Throws.InstanceOf<FormatException>());
         }
 
         [Test]
@@ -241,6 +243,13 @@ namespace PathPiper.Tests
             //var expected = UniPath.Parse(@"C:\user\docs\Letter.txt");
             //Assert.That(() => expected.Append((string)null), Throws.InstanceOf<ArgumentNullException>());
             //Assert.That(() => expected.Append((UniPath)null), Throws.InstanceOf<ArgumentNullException>());
+        }
+
+        [Test]
+        public void WorkingDirectoryPath() {
+            var actual = UniPath.WorkingDirectoryPath;
+            var expected = Environment.CurrentDirectory;
+            Assert.That(actual.ToString(), Is.EqualTo(expected));
         }
     }
 }
