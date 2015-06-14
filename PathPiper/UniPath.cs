@@ -226,9 +226,10 @@ namespace PathPiper
             return ToString(EnvironmentPathStyle);
         }
 
-        public string ToString(PathStyle style)
+        public string ToString(PathStyle pathStyle)
         {
-            throw new NotImplementedException();
+            var seperator = GetDirectorySeperator(pathStyle);
+            return string.Join(seperator.ToString(), _directories);
         }
 
         public static bool operator ==(UniPath a, UniPath b)
