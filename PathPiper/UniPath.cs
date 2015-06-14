@@ -202,6 +202,7 @@ namespace PathPiper
         {
             if (directoryOrFile == null)
                 return this; //TODO: Is this okay?
+
             return Append(directoryOrFile, EnvironmentPathStyle);
         }
 
@@ -229,6 +230,7 @@ namespace PathPiper
             // TODO: Unit tests for this
             if (path == null)
                 throw new ArgumentNullException("path");
+
             var currentDirs = _directories;
             var appendedDirs = path._directories;
 
@@ -258,6 +260,7 @@ namespace PathPiper
                 return false;
             return this == p;
         }
+
         public bool Equals(UniPath other)
         {
             // If parameter is null, return false:
