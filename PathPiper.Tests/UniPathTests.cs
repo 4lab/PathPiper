@@ -213,5 +213,13 @@ namespace PathPiper.Tests
             expected = UniPath.Parse(@"C:\user\docs\subdir\Letter.txt", PathStyle.Windows);
             Assert.That(actual, Is.EqualTo(expected));
         }
+
+        [Test]
+        public void AppendExceptions()
+        {
+            var expected = UniPath.Parse(@"C:\user\docs\Letter.txt");
+            Assert.That(() => expected.Append((string)null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => expected.Append((UniPath)null), Throws.InstanceOf<ArgumentNullException>());
+        }
     }
 }

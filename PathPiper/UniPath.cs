@@ -110,6 +110,8 @@ namespace PathPiper
 
         public UniPath Append(string directoryOrFile)
         {
+            if (directoryOrFile == null)
+                return this; //TODO: Is this okay?
             return Append(directoryOrFile, EnvironmentPathStyle);
         }
 
@@ -121,7 +123,7 @@ namespace PathPiper
             var seperator = GetDirectorySeperator(pathStyle);
             if (directoryOrFile.StartsWith(seperator.ToString()))
             {
-                if (directoryOrFile.Length > 1 && directoryOrFile[1] != seperator)
+                if (directoryOrFile.Length > 1 && directoryOrFile[1] != seperator || directoryOrFile.Length == 1)
                 {
                     // If not \\abc or //abc, remove first / or \
                     directoryOrFile = directoryOrFile.Substring(1);
