@@ -93,29 +93,28 @@ namespace PathPiper.Tests
         [Test]
         public void Normalize()
         {
-            UniPath path = UniPath.Parse("some/path/../lol.ext");
+            UniPath path = UniPath.Parse("some/path/../lol.ext", PathStyle.Unix);
             var expected = @"some/lol.ext";
             var normalized = path.Normalize();
             Assert.That(normalized.ToString(PathStyle.Unix), Is.EqualTo(expected));
 
-            path = UniPath.Parse("some/path/../lol.ext");
+            path = UniPath.Parse("some/path/../lol.ext", PathStyle.Unix);
             expected = @"some\lol.ext";
             normalized = path.Normalize();
             Assert.That(normalized.ToString(PathStyle.Windows), Is.EqualTo(expected));
 
-            path = UniPath.Parse("some/path/../../lol.ext");
+            path = UniPath.Parse("some/path/../../lol.ext", PathStyle.Unix);
             expected = @"lol.ext";
             normalized = path.Normalize();
             Assert.That(normalized.ToString(PathStyle.Unix), Is.EqualTo(expected));
 
-            path = UniPath.Parse("some/path/../../lol.ext");
+            path = UniPath.Parse("some/path/../../lol.ext", PathStyle.Unix);
             expected = @"lol.ext";
             normalized = path.Normalize();
             Assert.That(normalized.ToString(PathStyle.Windows), Is.EqualTo(expected));
 
-            // TODO: Use working directory or leave unchanged?
-            path = UniPath.Parse("../lol.ext");
-            expected = System.IO.Path.Combine(Environment.CurrentDirectory, "..", @"lol.ext");
+            path = UniPath.Parse("../lol.ext", PathStyle.Unix);
+            expected = @"..\lol.ext";
             normalized = path.Normalize();
             Assert.That(normalized.ToString(PathStyle.Windows), Is.EqualTo(expected));
 
@@ -124,7 +123,7 @@ namespace PathPiper.Tests
             normalized = path.Normalize();
             Assert.That(normalized.ToString(PathStyle.Windows), Is.EqualTo(expected));
 
-            path = UniPath.Parse("dir/lol.ext");
+            path = UniPath.Parse("dir/lol.ext", PathStyle.Unix);
             expected = @"dir\lol.ext";
             normalized = path.Normalize();
             Assert.That(normalized.ToString(PathStyle.Windows), Is.EqualTo(expected));
@@ -133,29 +132,31 @@ namespace PathPiper.Tests
         [Test]
         public void Parse()
         {
-            UniPath path = UniPath.Parse(@"C:\user\docs\Letter.txt");
+            UniPath path = UniPath.Parse(@"C:\user\docs\Letter.txt", PathStyle.Windows);
             var expected = @"C:\user\docs\Letter.txt";
             Assert.That(path.ToString(PathStyle.Windows), Is.EqualTo(expected));
 
             //todo: use working directory?
-            path = UniPath.Parse("../lol.ext");
-            expected = "../lol.ext";
+            path = UniPath.Parse("../lol.ext", PathStyle.Unix);
+            expected = @"..\lol.ext";
             Assert.That(path.ToString(PathStyle.Windows), Is.EqualTo(expected));
+            expected = @"../lol.ext";
+            Assert.That(path.ToString(PathStyle.Unix), Is.EqualTo(expected));
 
-            path = UniPath.Parse(@"C:\user\docs\somewhere\..\Letter.txt");
+            path = UniPath.Parse(@"C:\user\docs\somewhere\..\Letter.txt", PathStyle.Windows);
             expected = @"C:\user\docs\somewhere\..\Letter.txt";
             Assert.That(path.ToString(PathStyle.Windows), Is.EqualTo(expected));
 
-            path = UniPath.Parse(@"\\Server01\user\docs\Letter.txt");
-            expected = @"\\Server01\user\docs\Letter.txt";
-            Assert.That(path.ToString(PathStyle.Windows), Is.EqualTo(expected));
-
-            path = UniPath.Parse(@"/home/4lab/.config/fish/config.fish");
+            path = UniPath.Parse(@"/home/4lab/.config/fish/config.fish", PathStyle.Unix);
             expected = @"/home/4lab/.config/fish/config.fish";
             Assert.That(path.ToString(PathStyle.Unix), Is.EqualTo(expected));
 
-            path = UniPath.Parse(@"/home/4lab/.config/fish/config.fish");
+            path = UniPath.Parse(@"/home/4lab/.config/fish/config.fish", PathStyle.Unix);
             expected = @"\home\4lab\.config\fish\config.fish";
+            Assert.That(path.ToString(PathStyle.Windows), Is.EqualTo(expected));
+
+            path = UniPath.Parse(@"\\Server01\user\docs\Letter.txt", PathStyle.Windows);
+            expected = @"\\Server01\user\docs\Letter.txt";
             Assert.That(path.ToString(PathStyle.Windows), Is.EqualTo(expected));
         }
 
