@@ -9,8 +9,8 @@ namespace PathPiper
 {
     public class UniPath
     {
-        private const string _currentDirectory = ".";
-        private const string _parentDirectory = "..";
+        private const string _currentDirectoryAbbreviation = ".";
+        private const string _parentDirectoryAbbreviation = "..";
         private static readonly char[] _invalidFileNameChars = { '\"', '<', '>', '|', '\0', (Char)1, (Char)2, (Char)3, (Char)4, (Char)5, (Char)6, (Char)7, (Char)8, (Char)9, (Char)10, (Char)11, (Char)12, (Char)13, (Char)14, (Char)15, (Char)16, (Char)17, (Char)18, (Char)19, (Char)20, (Char)21, (Char)22, (Char)23, (Char)24, (Char)25, (Char)26, (Char)27, (Char)28, (Char)29, (Char)30, (Char)31, ':', '*', '?', '\\', '/' };
 
         private readonly ReadOnlyCollection<string> _directories;
@@ -159,10 +159,10 @@ namespace PathPiper
                 var currentDir = dirs[i];
                 switch (currentDir)
                 {
-                    case _currentDirectory: // "."
+                    case _currentDirectoryAbbreviation: // "."
                         continue; // Ignore "." folders/files
 
-                    case _parentDirectory: // ".."
+                    case _parentDirectoryAbbreviation: // ".."
 
                         // If there are any directories on the stack, pop them
                         if (dirStack.Count > 0)
@@ -189,7 +189,7 @@ namespace PathPiper
 
             // If there were any parents out of scope, prefix a few ".." dirs
             for (int i = 0; i < outOfScopeUppers; ++i)
-                res[i] = _parentDirectory;
+                res[i] = _parentDirectoryAbbreviation;
 
             // Fill the rest with the actual directories
             for (int i = outOfScopeUppers; i < res.Length; ++i)
@@ -298,9 +298,9 @@ namespace PathPiper
         //todo: char or string?
         public static char EnvironmentDirectorySeperator { get { return GetDirectorySeperator(EnvironmentPathStyle); } }
 
-        public static string CurrentDirectory { get { return _currentDirectory; } }
+        public static string CurrentDirectoryAbbreviation { get { return _currentDirectoryAbbreviation; } }
 
-        public static string ParentDirectory { get { return _parentDirectory; } }
+        public static string ParentDirectoryAbbreviation { get { return _parentDirectoryAbbreviation; } }
 
         public override string ToString()
         {
