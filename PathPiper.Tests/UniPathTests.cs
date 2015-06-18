@@ -270,30 +270,30 @@ namespace PathPiper.Tests
             var expected = UniPath.Parse(Path.Combine(Environment.CurrentDirectory, "file.bin"), PathStyle.Windows);
             Assert.That(actual, Is.EqualTo(expected));
 
-            actual = UniPath.Parse("..\\file.bin", PathStyle.Windows).ToAbsolute();
+            actual = UniPath.Parse("..\\file2.bin", PathStyle.Windows).ToAbsolute();
             //see above
             //-UniPath.Parse(Environment.CurrentDirectory).Append("..\file.bin");
-            expected = UniPath.Parse(Path.Combine(Environment.CurrentDirectory, "..\\file.bin"), PathStyle.Windows);
+            expected = UniPath.Parse(Path.Combine(Environment.CurrentDirectory, "..\\file2.bin"), PathStyle.Windows);
             Assert.That(actual, Is.EqualTo(expected));
 
             //with normalizing
-            actual = UniPath.Parse("..\\file.bin", PathStyle.Windows).ToAbsolute(true);
-            expected = UniPath.Parse(Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "..\\file.bin")), PathStyle.Windows);
+            actual = UniPath.Parse("..\\stuff.doc", PathStyle.Windows).ToAbsolute(true);
+            expected = UniPath.Parse(Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "..\\stuff.doc")), PathStyle.Windows);
             Assert.That(actual, Is.EqualTo(expected));
 
             //specify own path to use for "absoluting"
-            actual = UniPath.Parse("file.bin", PathStyle.Windows).ToAbsolute(UniPath.Parse(@"D:\"));
-            expected = UniPath.Parse(Path.Combine(@"D:\", "file.bin"), PathStyle.Windows);
+            actual = UniPath.Parse("phone.xls", PathStyle.Windows).ToAbsolute(UniPath.Parse(@"D:\"));
+            expected = UniPath.Parse(Path.Combine(@"D:\", "phone.xls"), PathStyle.Windows);
             Assert.That(actual, Is.EqualTo(expected));
 
             //...with normalizing
-            actual = UniPath.Parse(@"..\file.bin", PathStyle.Windows).ToAbsolute(UniPath.Parse(@"D:\stuff\"), true);
-            expected = UniPath.Parse(Path.GetFullPath(Path.Combine(@"D:\", "file.bin")), PathStyle.Windows);
+            actual = UniPath.Parse(@"..\idontknow.exe", PathStyle.Windows).ToAbsolute(UniPath.Parse(@"D:\stuff\"), true);
+            expected = UniPath.Parse(Path.GetFullPath(Path.Combine(@"D:\", "idontknow.exe")), PathStyle.Windows);
             Assert.That(actual, Is.EqualTo(expected));
 
             //...without, just for safety
-            actual = UniPath.Parse(@"..\file.bin", PathStyle.Windows).ToAbsolute(UniPath.Parse(@"D:\stuff\"));
-            expected = UniPath.Parse(Path.Combine(@"D:\stuff\", @"..\file.bin"), PathStyle.Windows);
+            actual = UniPath.Parse(@"..\trojan.jpg.exe", PathStyle.Windows).ToAbsolute(UniPath.Parse(@"D:\stuff\"));
+            expected = UniPath.Parse(Path.Combine(@"D:\stuff\", @"..\trojan.jpg.exe"), PathStyle.Windows);
             Assert.That(actual, Is.EqualTo(expected));
 
             //todo: unix tests?
