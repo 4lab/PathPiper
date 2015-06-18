@@ -141,6 +141,7 @@ namespace PathPiper
                 Debug.Assert(_directories != null);
                 if (_directories.Count == 0)
                     return false;
+
                 var last = _directories[_directories.Count - 1];
                 return Path.HasExtension(last);
             }
@@ -153,6 +154,7 @@ namespace PathPiper
                 Debug.Assert(_directories != null);
                 if (_directories.Count == 0)
                     return null;
+
                 var last = _directories[_directories.Count - 1];
                 return Path.GetExtension(last);
             }
@@ -165,6 +167,7 @@ namespace PathPiper
                 Debug.Assert(_directories != null);
                 if (_directories.Count == 0)
                     return null;
+
                 var last = _directories[_directories.Count - 1];
                 return Path.GetFileName(last);
             }
@@ -272,10 +275,13 @@ namespace PathPiper
         {
             Debug.Assert(_directories != null);
             var dirs = _directories.ToArray();
+
             if (dirs.Length == 0)
                 return new UniPath(new ReadOnlyCollection<string>(new[] { newExtensionWithDot }));
+
             var last = dirs[dirs.Length - 1];
             dirs[dirs.Length - 1] = Path.ChangeExtension(last, newExtensionWithDot);
+
             return new UniPath(new ReadOnlyCollection<string>(dirs));
         }
 
@@ -285,6 +291,7 @@ namespace PathPiper
             var p = other as UniPath;
             if ((object)p == null)
                 return false;
+
             return this == p;
         }
 
@@ -293,6 +300,7 @@ namespace PathPiper
             // If parameter is null, return false:
             if ((object)other == null)
                 return false;
+
             // Return true if the fields match:
             return this == other;
         }
@@ -348,6 +356,7 @@ namespace PathPiper
             // TODO: Casing? Windows doesn't care about the casing.
             if (ReferenceEquals(a, b))
                 return true;
+
             if (((object)a == null) || ((object)b == null))
                 return false;
 
