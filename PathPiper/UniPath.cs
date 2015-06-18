@@ -24,6 +24,7 @@ namespace PathPiper
         {
             return Parse(path, EnvironmentPathStyle);
         }
+
         public static UniPath Parse(string path, PathStyle pathStyle)
         {
             if (path == null)
@@ -105,6 +106,32 @@ namespace PathPiper
             {
                 return Parse(Environment.CurrentDirectory);
             }
+        }
+
+        public bool IsAbsolute
+        {
+            get
+            {
+                return Path.IsPathRooted(ToString());
+            }
+        }
+
+        public UniPath ToAbsolute(bool normalize = false)
+        {
+            return ToAbsolute(WorkingDirectoryPath, normalize);
+        }
+
+        public UniPath ToAbsolute(UniPath basepath, bool normalize = false)
+        {
+            if(!basepath.IsAbsolute)
+                throw new ArgumentException("Basepath must be absolute.");
+
+            var result = basepath.Append(this);
+
+            if (normalize)
+                result = result.Normalize();
+
+            return result;
         }
 
         public bool HasExtension
