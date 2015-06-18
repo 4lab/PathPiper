@@ -298,5 +298,13 @@ namespace PathPiper.Tests
 
             //todo: unix tests?
         }
+
+        [Test]
+        public void ToAbsoluteExceptions() {
+            var expected = UniPath.Parse(@"random.rar");
+
+            Assert.That(() => expected.ToAbsolute(null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => expected.ToAbsolute(UniPath.Parse("notabsolute.wmv")), Throws.InstanceOf<ArgumentException>());
+        }
     }
 }

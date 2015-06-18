@@ -123,6 +123,9 @@ namespace PathPiper
 
         public UniPath ToAbsolute(UniPath basepath, bool normalize = false)
         {
+            if(basepath == null)
+                throw new ArgumentNullException("basepath");
+
             if(!basepath.IsAbsolute)
                 throw new ArgumentException("Basepath must be absolute.");
 
