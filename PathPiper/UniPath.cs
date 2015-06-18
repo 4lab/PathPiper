@@ -32,7 +32,7 @@ namespace PathPiper
 
             Trace.WriteLine(String.Format("===Parse(\"{0}\")===", path));
 
-            var directorySeperator = GetDirectorySeperator(pathStyle);
+            var directorySeperator = GetDirectorySeparator(pathStyle);
             var parts = path.Split(new[] { directorySeperator });
             var items = new List<string>();
 
@@ -87,7 +87,7 @@ namespace PathPiper
             return new UniPath(new ReadOnlyCollection<string>(items));
         }
 
-        private static char GetDirectorySeperator(PathStyle pathStyle)
+        private static char GetDirectorySeparator(PathStyle pathStyle)
         {
             switch (pathStyle)
             {
@@ -116,20 +116,31 @@ namespace PathPiper
             }
         }
 
-        public UniPath ToAbsolute(bool normalize = false)
+        public UniPath ToAbsolute()
+        {
+            return ToAbsolute(WorkingDirectoryPath, false);
+        }
+
+        public UniPath ToAbsolute(bool normalize)
         {
             return ToAbsolute(WorkingDirectoryPath, normalize);
         }
 
-        public UniPath ToAbsolute(UniPath basepath, bool normalize = false)
+        public UniPath ToAbsolute(UniPath basePath)
         {
-            if(basepath == null)
-                throw new ArgumentNullException("basepath");
+            return ToAbsolute(basePath, false);
+        }
 
-            if(!basepath.IsAbsolute)
+        public UniPath ToAbsolute(UniPath basePath, bool normalize)
+        {
+
+            if (basePath == null)
+                throw new ArgumentNullException("basePath");
+
+            if (!basePath.IsAbsolute)
                 throw new ArgumentException("Basepath must be absolute.");
 
-            var result = basepath.Append(this);
+            var result = basePath.Append(this);
 
             if (normalize)
                 result = result.Normalize();
@@ -244,8 +255,8 @@ namespace PathPiper
             if (directoryOrFile == null)
                 return this; //TODO: Is this okay?
 
-            var seperator = GetDirectorySeperator(pathStyle);
-            if (directoryOrFile.StartsWith(seperator.ToString()))
+            var seperator = GetDirectorySeparator(pathStyle);
+            if (directoryOrFile.StartsWith(seperator.ToString(), StringComparison.Ordinal))
             {
                 if (directoryOrFile.Length > 1 && directoryOrFile[1] != seperator || directoryOrFile.Length == 1)
                 {
@@ -288,10 +299,10 @@ namespace PathPiper
             return new UniPath(new ReadOnlyCollection<string>(dirs));
         }
 
-        public override bool Equals(object other)
+        public override bool Equals(object obj)
         {
             // If parameter cannot be cast to UniPath, return false:
-            var p = other as UniPath;
+            var p = obj as UniPath;
             if ((object)p == null)
                 return false;
 
@@ -337,7 +348,7 @@ namespace PathPiper
         }
 
         //todo: char or string?
-        public static char EnvironmentDirectorySeperator { get { return GetDirectorySeperator(EnvironmentPathStyle); } }
+        public static char EnvironmentDirectorySeparator { get { return GetDirectorySeparator(EnvironmentPathStyle); } }
 
         public static string CurrentDirectoryAbbreviation { get { return _currentDirectoryAbbreviation; } }
 
@@ -350,7 +361,7 @@ namespace PathPiper
 
         public string ToString(PathStyle pathStyle)
         {
-            var seperator = GetDirectorySeperator(pathStyle);
+            var seperator = GetDirectorySeparator(pathStyle);
             return string.Join(seperator.ToString(), _directories);
         }
 
