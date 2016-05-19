@@ -100,45 +100,24 @@ namespace PathPiper
             }
         }
 
-        public static UniPath WorkingDirectoryPath
-        {
-            get
-            {
-                return Parse(Environment.CurrentDirectory);
-            }
-        }
+        public static UniPath WorkingDirectoryPath => Parse(Environment.CurrentDirectory);
 
-        public bool IsAbsolute
-        {
-            get
-            {
-                return Path.IsPathRooted(ToString());
-            }
-        }
+        public bool IsAbsolute => Path.IsPathRooted(ToString());
 
-        public UniPath ToAbsolute()
-        {
-            return ToAbsolute(WorkingDirectoryPath, false);
-        }
+        public UniPath ToAbsolute() => ToAbsolute(WorkingDirectoryPath, false);
 
-        public UniPath ToAbsolute(bool normalize)
-        {
-            return ToAbsolute(WorkingDirectoryPath, normalize);
-        }
+        public UniPath ToAbsolute(bool normalize) => ToAbsolute(WorkingDirectoryPath, normalize);
 
-        public UniPath ToAbsolute(UniPath basePath)
-        {
-            return ToAbsolute(basePath, false);
-        }
+        public UniPath ToAbsolute(UniPath basePath) => ToAbsolute(basePath, false);
 
         public UniPath ToAbsolute(UniPath basePath, bool normalize)
         {
 
             if (basePath == null)
-                throw new ArgumentNullException("basePath");
+                throw new ArgumentNullException(nameof(basePath));
 
             if (!basePath.IsAbsolute)
-                throw new ArgumentException("Basepath must be absolute.");
+                throw new ArgumentException($"{nameof(basePath)} must be absolute.");
 
             var result = basePath.Append(this);
 
@@ -273,7 +252,7 @@ namespace PathPiper
         {
             // TODO: Unit tests for this
             if (path == null)
-                throw new ArgumentNullException("path");
+                throw new ArgumentNullException(nameof(path));
 
             var currentDirs = _directories;
             var appendedDirs = path._directories;
@@ -319,10 +298,7 @@ namespace PathPiper
             return this == other;
         }
 
-        public override int GetHashCode()
-        {
-            return _directories.GetHashCode();
-        }
+        public override int GetHashCode() => _directories.GetHashCode();
 
         public static PathStyle EnvironmentPathStyle
         {
@@ -348,11 +324,11 @@ namespace PathPiper
         }
 
         //todo: char or string?
-        public static char EnvironmentDirectorySeparator { get { return GetDirectorySeparator(EnvironmentPathStyle); } }
+        public static char EnvironmentDirectorySeparator => GetDirectorySeparator(EnvironmentPathStyle);
 
-        public static string CurrentDirectoryAbbreviation { get { return _currentDirectoryAbbreviation; } }
+        public static string CurrentDirectoryAbbreviation => _currentDirectoryAbbreviation;
 
-        public static string ParentDirectoryAbbreviation { get { return _parentDirectoryAbbreviation; } }
+        public static string ParentDirectoryAbbreviation => _parentDirectoryAbbreviation;
 
         public override string ToString()
         {
@@ -394,9 +370,6 @@ namespace PathPiper
             return true;
         }
 
-        public static bool operator !=(UniPath a, UniPath b)
-        {
-            return !(a == b);
-        }
+        public static bool operator !=(UniPath a, UniPath b) => !(a == b);
     }
 }
