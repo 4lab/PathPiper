@@ -268,33 +268,39 @@ namespace PathPiper.Tests
             //-UniPath.WorkingDirectoryPath.Append("file.bin");
             //would be the exact same as what happens inside ToAbsolute.
             var expected = UniPath.Parse(Path.Combine(Environment.CurrentDirectory, "file.bin"), PathStyle.Windows);
-            Assert.That(actual, Is.EqualTo(expected));
+            //Assert.That(actual, Is.EqualTo(expected));
+            Assert.That(actual == expected);
 
             actual = UniPath.Parse("..\\file2.bin", PathStyle.Windows).ToAbsolute();
             //see above
             //-UniPath.Parse(Environment.CurrentDirectory).Append("..\file.bin");
             expected = UniPath.Parse(Path.Combine(Environment.CurrentDirectory, "..\\file2.bin"), PathStyle.Windows);
-            Assert.That(actual, Is.EqualTo(expected));
+            //Assert.That(actual, Is.EqualTo(expected));
+            Assert.That(actual == expected);
 
             //with normalizing
             actual = UniPath.Parse("..\\stuff.doc", PathStyle.Windows).ToAbsolute(true);
             expected = UniPath.Parse(Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, "..\\stuff.doc")), PathStyle.Windows);
-            Assert.That(actual, Is.EqualTo(expected));
+            //Assert.That(actual, Is.EqualTo(expected));
+            Assert.That(actual == expected);
 
             //specify own path to use for "absoluting"
             actual = UniPath.Parse("phone.xls", PathStyle.Windows).ToAbsolute(UniPath.Parse(@"D:\"));
             expected = UniPath.Parse(Path.Combine(@"D:\", "phone.xls"), PathStyle.Windows);
-            Assert.That(actual, Is.EqualTo(expected));
+            //Assert.That(actual, Is.EqualTo(expected));
+            Assert.That(actual == expected);
 
             //...with normalizing
             actual = UniPath.Parse(@"..\idontknow.exe", PathStyle.Windows).ToAbsolute(UniPath.Parse(@"D:\stuff\"), true);
             expected = UniPath.Parse(Path.GetFullPath(Path.Combine(@"D:\", "idontknow.exe")), PathStyle.Windows);
-            Assert.That(actual, Is.EqualTo(expected));
+            //Assert.That(actual, Is.EqualTo(expected));
+            Assert.That(actual == expected);
 
             //...without, just for safety
             actual = UniPath.Parse(@"..\trojan.jpg.exe", PathStyle.Windows).ToAbsolute(UniPath.Parse(@"D:\stuff\"));
             expected = UniPath.Parse(Path.Combine(@"D:\stuff\", @"..\trojan.jpg.exe"), PathStyle.Windows);
-            Assert.That(actual, Is.EqualTo(expected));
+            //Assert.That(actual, Is.EqualTo(expected));
+            Assert.That(actual == expected);
 
             //todo: unix tests?
         }
