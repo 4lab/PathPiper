@@ -20,11 +20,9 @@ namespace PathPiper
             _directories = directories ?? new ReadOnlyCollection<string>(new string[0]);
         }
 
-        public static UniPath Parse(string path)
-        {
-            return Parse(path, EnvironmentPathStyle);
-        }
+        public static UniPath Parse(string path) => Parse(path, EnvironmentPathStyle);
 
+        // TOOD: Add TryParse which uses C# 8's Non-Nullable Types
         public static UniPath Parse(string path, PathStyle pathStyle)
         {
             if (path == null)
@@ -112,7 +110,6 @@ namespace PathPiper
 
         public UniPath ToAbsolute(UniPath basePath, bool normalize)
         {
-
             if (basePath == null)
                 throw new ArgumentNullException(nameof(basePath));
 
@@ -135,7 +132,7 @@ namespace PathPiper
                 if (_directories.Count == 0)
                     return false;
 
-                var last = _directories[_directories.Count - 1];
+                var last = _directories[_directories.Count - 1]; // TODO: C# 8 use [^1]
                 return Path.HasExtension(last);
             }
         }
@@ -148,7 +145,7 @@ namespace PathPiper
                 if (_directories.Count == 0)
                     return null;
 
-                var last = _directories[_directories.Count - 1];
+                var last = _directories[_directories.Count - 1]; // TODO: C# 8 use [^1]
                 return Path.GetExtension(last);
             }
         }
@@ -161,7 +158,7 @@ namespace PathPiper
                 if (_directories.Count == 0)
                     return null;
 
-                var last = _directories[_directories.Count - 1];
+                var last = _directories[_directories.Count - 1]; // TODO: C# 8 use [^1]
                 return Path.GetFileName(last);
             }
         }
@@ -323,17 +320,14 @@ namespace PathPiper
             }
         }
 
-        //todo: char or string?
+        // TODO: char or string?
         public static char EnvironmentDirectorySeparator => GetDirectorySeparator(EnvironmentPathStyle);
 
         public static string CurrentDirectoryAbbreviation => _currentDirectoryAbbreviation;
 
         public static string ParentDirectoryAbbreviation => _parentDirectoryAbbreviation;
 
-        public override string ToString()
-        {
-            return ToString(EnvironmentPathStyle);
-        }
+        public override string ToString() => ToString(EnvironmentPathStyle);
 
         public string ToString(PathStyle pathStyle)
         {
