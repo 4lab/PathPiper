@@ -10,4 +10,4 @@ Console.WriteLine(path.Extension); // ""
 Console.WriteLine(path.HasExtension); // False
 ```
 
-![Class Diagram](PathPiper/PathPiper.png)
+![Class Diagram](docs/PathPiper.png)
